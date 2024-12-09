@@ -1,0 +1,24 @@
+{
+  "name": "ride-api",
+  "version": "1.0.0",
+  "description": "create an api for cab rides",
+  "main": "server.ts",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsc -b && node dist/server.js"
+  },
+  "keywords": [
+    "cab",
+    "ride",
+    "book"
+  ],
+  "author": "Sowparna Shome",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1"
+  }
+}
