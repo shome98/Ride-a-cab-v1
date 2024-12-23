@@ -126,4 +126,4 @@ captainSchema.methods.generateTemporaryToken = function () {
   
     return { unHashedToken, hashedToken, tokenExpiry };
 };
-export const User=mongoose.models.User||mongoose.model<ICaptain>("Captain",captainSchema);
+export const Captain=mongoose.models.Captain||mongoose.model<ICaptain>("Captain",captainSchema);
