@@ -12,6 +12,7 @@ interface IUser extends Document{
     password:string;
     username:string;
     role:string;
+    socketId:string;
 }
 const userSchema=new Schema<IUser>({
     fullName:{
@@ -28,18 +29,27 @@ const userSchema=new Schema<IUser>({
     email:{
         type:String,
         required:true,
-        unique:true
+        unique:true,
+        match: [ /^\S+@\S+\.\S+$/, 'Please enter a valid email' ]
     },
     username:{
         type:String,
     },
-    password:{type:String,required:true},
+    password:{
+        type:String,
+        required:true,
+        select:false
+    },
     role:{
         type:String,
         default:"User"
+    },
+    socketId: {
+        type: String,
     }
 });
 userSchema.pre("save",async function(next){
+    //if(this.isModified("username")) this.username=this.email.split("@")[0];
     if(!this.isModified("password")) return next();
     this.password=await bcrypt.hash(this.password,10);
     next();
