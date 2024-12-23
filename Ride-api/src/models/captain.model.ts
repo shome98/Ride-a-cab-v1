@@ -13,7 +13,8 @@ interface ICaptain extends Document{
     username:string;
     role:string;
     socketId:string;
-    vahicle:{
+    status:string;
+    vehicle:{
         color:string;
         plate:string;
         capacity:number;
@@ -24,8 +25,8 @@ interface ICaptain extends Document{
         longitude:number;
     }
 }
-const captainSchema = new mongoose.Schema({
-    fullname: {
+const captainSchema = new Schema<ICaptain>({
+    fullName: {
         firstname: {
             type: String,
             required:[true,"First name is required"],
