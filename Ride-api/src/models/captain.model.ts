@@ -109,14 +109,14 @@ captainSchema.methods.isPasswordCorrect=async function(password:string):Promise<
 captainSchema.methods.generateAccessToken= function():string{
     return jwt.sign(
         {_id:this._id, email:this.email, username:this.username, role:this.role},
-        process.env.ACCESS_TOKEN_SECRET!,
+        process.env.ACCESS_TOKEN_SECRET_CAPTAIN!,
         {expiresIn:process.env.ACCESS_TOKEN_EXPIRY}
     );
 };
 captainSchema.methods.generateRefreshToken = function (): string {
     return jwt.sign(
       { _id: this._id },
-      process.env.REFRESH_TOKEN_SECRET!,
+      process.env.REFRESH_TOKEN_SECRET_CAPTAIN!,
       { expiresIn: process.env.REFRESH_TOKEN_EXPIRY }
     );
 };
