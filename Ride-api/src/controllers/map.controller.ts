@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getAddressCoordinates, getDistanceTime } from "../services/map.service";
+import { getAddressCoordinates, getAutoCompleteSuggestions, getDistanceTime } from "../services/map.service";
 import { ApiResponse } from "../helpers/ApiResponse";
 import { ApiError } from "../helpers/ApiError";
 
@@ -27,6 +27,20 @@ export const fetchDistanceTime=async(req:Request,res:Response)=>{
         const distanceTime=await getDistanceTime(origin as string,destination as string);
         res.status(200).json(new ApiResponse(200,distanceTime));
     } catch (error) {
-        res.status(404).json(new ApiError(404,"No vales of distance and time were found for the origin and destination"));
+        res.status(404).json(new ApiError(404,"No values of distance and time were found origin between destination"));
+    }
+};
+
+export const autoCompleteSuggestions=async(req:Request,res:Response)=>{
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //     return res.status(400).json({ errors: errors.array() });
+    // }
+    const {input}=await req.query;
+    try {
+        const suggestions=await getAutoCompleteSuggestions(input as string);
+        res.status(200).json(new ApiResponse(200,suggestions));
+    } catch (error) {
+        res.status(404).json(new ApiError(404,"No suggestions were found."));
     }
 };
