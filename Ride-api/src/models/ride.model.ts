@@ -39,7 +39,7 @@ const rideSchema = new Schema<IRide>({
 
     status: {
         type: String,
-        enum: [ 'pending', 'accepted', "ongoing", 'completed', 'cancelled' ],
+        enum: ['pending', 'accepted', "ongoing", 'completed', 'cancelled'],
         default: 'pending',
     },
 
@@ -66,6 +66,6 @@ const rideSchema = new Schema<IRide>({
         select: false,
         required: true,
     },
-})
+}, { timestamps: true });
 
 export const Ride=mongoose.models.Ride||mongoose.model<IRide>("Ride",rideSchema);

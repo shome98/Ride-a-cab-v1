@@ -2,6 +2,7 @@ import mongoose, { Document, Schema } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
+import { timeStamp } from "console";
 
 interface IUser extends Document{
     fullName:{
@@ -47,7 +48,7 @@ const userSchema=new Schema<IUser>({
     socketId: {
         type: String,
     }
-});
+},{timestamps:true});
 userSchema.pre("save",async function(next){
     //if(this.isModified("username")) this.username=this.email.split("@")[0];
     if(!this.isModified("password")) return next();

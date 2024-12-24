@@ -15,6 +15,6 @@ const blacklistTokenSchema = new Schema<IBlackListToken>({
         default: Date.now,
         expires: 86400 // 24 hours in seconds
     }
-});
+},{timestamps:true});
 
 export const BlackListToken = mongoose.models.BlackListToken||mongoose.model<IBlackListToken>('BlackListToken', blacklistTokenSchema);
