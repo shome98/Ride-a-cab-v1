@@ -27,12 +27,12 @@ interface ICaptain extends Document{
 }
 const captainSchema = new Schema<ICaptain>({
     fullName: {
-        firstname: {
+        firstName: {
             type: String,
             required: [true, "First name is required"],
             minlength: [3, 'Firstname must be at least 3 characters long'],
         },
-        lastname: {
+        lastName: {
             type: String,
             minlength: [3, 'Lastname must be at least 3 characters long'],
         }
