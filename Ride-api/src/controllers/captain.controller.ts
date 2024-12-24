@@ -42,3 +42,15 @@ export const captainLogin=async(req:Request,res:Response)=>{
         .cookie("refreshToken", refreshToken, { httpOnly: true, secure: true,sameSite: "none" as "none" | "lax" | "strict" })
         .json(new ApiResponse(201,{id:checkCaptain._id,accessToken,refreshToken},"You have logged in."));
 };
+
+export const captainLogout=async(req:Request,res:Response)=>{
+    const userId=await (req as any).userId;
+    //await User.findByIdAndUpdate(userId, { $unset: { refreshToken: 1 } });
+    //const accessToken = req.cookies.accessToken || req.headers.authorization.split(' ')[ 1 ];
+    //await BlackListToken.create({ token:accessToken });
+    return res
+        .status(200)
+        .clearCookie("accessToken",{ httpOnly: true, secure: true,sameSite: "none" as "none" | "lax" | "strict" })
+        .clearCookie("refreshToken",{ httpOnly: true, secure: true,sameSite: "none" as "none" | "lax" | "strict" })
+        .json(new ApiResponse(200, {}, "You have logged out."));
+};
