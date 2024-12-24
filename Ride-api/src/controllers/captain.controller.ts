@@ -6,7 +6,14 @@ import { ApiResponse } from "../helpers/ApiResponse";
 export const registerCaptain=async(req:Request,res:Response)=>{
     const {fullName,email,password,vehicle}=await req.body;
     const {firstName,lastName}=fullName;
-    const {color,plate,capacity,vehicleType}=vehicle;
+    const { color, plate, capacity, vehicleType } = vehicle;
+    /*if (!fullName || !fullName.firstName) throw new ApiError(400, "First name is required.");
+    if (!email) throw new ApiError(400, "Email is required.");
+    if (!password) throw new ApiError(400, "Password is required.");
+    if (!vehicle || !vehicle.color || !vehicle.plate || !vehicle.capacity || !vehicle.vehicleType) {
+        throw new ApiError(400, "All vehicle details are required.");
+    }*/
+
     // const errors = validationResult(req);
     // if (!errors.isEmpty()) {
     //     return res.status(400).json({ errors: errors.array() });
