@@ -14,17 +14,21 @@ export const auth=async(req:Request,res:Response,next:NextFunction)=>{
     // const decodeUser=jwt.verify(accessToken,process.env.ACCESS_TOKEN_SECRET_USER!);
     // const decodedCaptain=jwt.verify(accessToken,process.env.ACCESS_TOKEN_SECRET_CAPTAIN!);
     try {
-        const decoded=jwt.verify(accessToken,process.env.ACCESS_TOKEN_SECRET!) as {_id:string,role:string};
+        const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET!) as { _id: string, role: string };
+        //console.log(decoded);
         if(!decoded||typeof decoded!=="object"||!("role" in decoded)) res.json(new ApiResponse(401,"You have a invalid token."));
         switch(decoded.role){
             case "User":
-                const loggedInUser=await User.findById(decoded._id);
-                (req as any).user=loggedInUser;
+                const loggedInUser = await User.findById(decoded._id);
+                (req as any).user = loggedInUser;
                 (req as any).userId = decoded._id;
+                //console.log((req as any).user)
+                break;
             case "Captain":
-                const loggedInCaptain=await Captain.findById(decoded._id);
-                (req as any).captain=loggedInCaptain;
+                const loggedInCaptain = await Captain.findById(decoded._id);
+                (req as any).captain = loggedInCaptain;
                 (req as any).captainId = decoded._id;
+                break;
             default:
                 res.json(new ApiResponse(403,"Role not found."));
         }
