@@ -35,8 +35,27 @@ export const getDistanceTime = async (origin:string, destination:string) => {
         } else {
             throw new Error('Unable to fetch distance and time');
         }
-    } catch (err) {
-        console.error(err);
-        throw err;
+    } catch (error) {
+        console.error(error);
+        throw error;
     }
-}
+};
+
+export const getAutoCompleteSuggestions = async (input:string) => {
+    if (!input) {
+        throw new Error('query is required');
+    }
+    const apiKey = process.env.GOOGLE_MAPS_API;
+    const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(input)}&key=${apiKey}`;
+    try {
+        const response = await axios.get(url);
+        if (response.data.status === 'OK') {
+            return response.data.predictions.map(prediction => prediction.description).filter(value => value);
+        } else {
+            throw new Error('Unable to fetch suggestions');
+        }
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
