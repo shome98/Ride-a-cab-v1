@@ -21,3 +21,20 @@ export const registerUser=async(req:Request,res:Response)=>{
     const createdUser=await User.findById(newUser._id);
     return res.status(201).json(new ApiResponse(201, createdUser, "User registration is successfull.")); 
 };
+
+export const userLogin=async(req:Request,res:Response)=>{
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //     return res.status(400).json({ errors: errors.array() });
+    // }
+    const {email,password}=await req.body;
+    const checkUser=await User.findOne({email}).select("+password");
+    if(!checkUser) res.json(new ApiResponse(401,"Looks like you have entered an non existing email."));
+    if(!(await checkUser.isPasswordCorrect(password))) res.json(new ApiResponse(401,"Looks like you have entered an incorrect password."));
+    const accessToken=await checkUser.generateAccessToken();
+    const refreshToken=await checkUser.generateRefreshToken();
+    res
+        .cookie("accessToken", accessToken, { httpOnly: true, secure: true,sameSite: "none" as "none" | "lax" | "strict" })
+        .cookie("refreshToken", refreshToken, { httpOnly: true, secure: true,sameSite: "none" as "none" | "lax" | "strict" })
+        .json(new ApiResponse(201,{id:checkUser._id,accessToken,refreshToken},"You have logged in."));
+};

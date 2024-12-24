@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Captain } from "../models/captain.model";
 import { ApiError } from "../helpers/ApiError";
 import { ApiResponse } from "../helpers/ApiResponse";
+
 export const registerCaptain=async(req:Request,res:Response)=>{
     const {fullName,email,password,vehicle}=await req.body;
     const {firstName,lastName}=fullName;
@@ -23,4 +24,21 @@ export const registerCaptain=async(req:Request,res:Response)=>{
     if(!newCaptain) throw new ApiError(400,"Could not create the captain.");
     const createdCaptain=await Captain.findById(newCaptain._id);
     return res.status(201).json(new ApiResponse(201, createdCaptain, "Captain registration is successfull.")); 
+};
+
+export const captainLogin=async(req:Request,res:Response)=>{
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //     return res.status(400).json({ errors: errors.array() });
+    // }
+    const {email,password}=await req.body;
+    const checkCaptain=await Captain.findOne({email}).select("+password");
+    if(!checkCaptain) res.json(new ApiResponse(401,"Looks like you have entered an non existing email."));
+    if(!(await checkCaptain.isPasswordCorrect(password))) res.json(new ApiResponse(401,"Looks like you have entered an incorrect password."));
+    const accessToken=await checkCaptain.generateAccessToken();
+    const refreshToken=await checkCaptain.generateRefreshToken();
+    res
+        .cookie("accessToken", accessToken, { httpOnly: true, secure: true,sameSite: "none" as "none" | "lax" | "strict" })
+        .cookie("refreshToken", refreshToken, { httpOnly: true, secure: true,sameSite: "none" as "none" | "lax" | "strict" })
+        .json(new ApiResponse(201,{id:checkCaptain._id,accessToken,refreshToken},"You have logged in."));
 };
