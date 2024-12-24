@@ -44,8 +44,8 @@ export const captainLogin=async(req:Request,res:Response)=>{
 };
 
 export const captainLogout=async(req:Request,res:Response)=>{
-    const userId=await (req as any).userId;
-    //await User.findByIdAndUpdate(userId, { $unset: { refreshToken: 1 } });
+    const captainId=await (req as any).captainId;
+    //await Captain.findByIdAndUpdate(captainId, { $unset: { refreshToken: 1 } });
     //const accessToken = req.cookies.accessToken || req.headers.authorization.split(' ')[ 1 ];
     //await BlackListToken.create({ token:accessToken });
     return res
