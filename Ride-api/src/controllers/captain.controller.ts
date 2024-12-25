@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Captain } from "../models/captain.model";
 import { ApiError } from "../helpers/ApiError";
 import { ApiResponse } from "../helpers/ApiResponse";
+import { BlackListToken } from "../models/blackListToken.model";
 
 export const registerCaptain=async(req:Request,res:Response)=>{
     const {fullName,email,password,vehicle}=await req.body;
@@ -51,10 +52,11 @@ export const captainLogin=async(req:Request,res:Response)=>{
 };
 
 export const captainLogout=async(req:Request,res:Response)=>{
-    const captainId=await (req as any).captainId;
+    const captainId = await (req as any).captainId;
+    //console.log(`the captain is - ${await (req as any).captain}`);
     //await Captain.findByIdAndUpdate(captainId, { $unset: { refreshToken: 1 } });
-    //const accessToken = req.cookies.accessToken || req.headers.authorization.split(' ')[ 1 ];
-    //await BlackListToken.create({ token:accessToken });
+    const accessToken = req.headers.authorization?.split(" ")[1]||req.cookies?.accessToken;
+    await BlackListToken.create({ token:accessToken });
     return res
         .status(200)
         .clearCookie("accessToken",{ httpOnly: true, secure: true,sameSite: "none" as "none" | "lax" | "strict" })

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { User } from "../models/user.model";
 import { ApiError } from "../helpers/ApiError";
 import { ApiResponse } from "../helpers/ApiResponse";
+import { BlackListToken } from "../models/blackListToken.model";
 
 export const registerUser=async(req:Request,res:Response)=>{
     const {fullName,email,password}=await req.body;
@@ -42,8 +43,8 @@ export const userLogin=async(req:Request,res:Response)=>{
 export const userLogout=async(req:Request,res:Response)=>{
     const userId=await (req as any).userId;
     //await User.findByIdAndUpdate(userId, { $unset: { refreshToken: 1 } });
-    //const accessToken = req.cookies.accessToken || req.headers.authorization.split(' ')[ 1 ];
-    //await BlackListToken.create({ token:accessToken });
+    const accessToken = req.headers.authorization?.split(" ")[1]||req.cookies?.accessToken;
+    await BlackListToken.create({ token:accessToken });
     return res
         .status(200)
         .clearCookie("accessToken",{ httpOnly: true, secure: true,sameSite: "none" as "none" | "lax" | "strict" })
