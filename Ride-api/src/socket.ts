@@ -9,7 +9,7 @@ type locationdata = {
     location: { latitude: number; longitude: number }
 };
 
-function initializeSocket(server: any) {
+export function initializeSocket(server: any) {
     io = new Server(server, {
         cors: {
             origin: "*",
@@ -45,7 +45,7 @@ function initializeSocket(server: any) {
     });
 }
 
-function sendMessageToSocketId(socketId: string, messageObject: { event: string; data: any }) {
+export function sendMessageToSocketId(socketId: string, messageObject: { event: string; data: any }) {
     console.log(messageObject);
 
     if (io) {
