@@ -2,12 +2,13 @@ import { Request, Response } from "express";
 import { getAddressCoordinates, getAutoCompleteSuggestions, getDistanceTime } from "../services/map.service";
 import { ApiResponse } from "../helpers/ApiResponse";
 import { ApiError } from "../helpers/ApiError";
+import { validationResult } from "express-validator";
 
 export const getCoordinates=async(req:Request,res:Response)=>{
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //     return res.status(400).json({ errors: errors.array() });
-    // }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     const {address}=await req.query;
     try {
         const coordinates = await getAddressCoordinates(address as string);
@@ -18,10 +19,10 @@ export const getCoordinates=async(req:Request,res:Response)=>{
 }
 
 export const fetchDistanceTime=async(req:Request,res:Response)=>{
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //     return res.status(400).json({ errors: errors.array() });
-    // }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     const {origin,destination}=await req.query;
     try {
         const distanceTime=await getDistanceTime(origin as string,destination as string);
@@ -32,10 +33,10 @@ export const fetchDistanceTime=async(req:Request,res:Response)=>{
 };
 
 export const autoCompleteSuggestions=async(req:Request,res:Response)=>{
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //     return res.status(400).json({ errors: errors.array() });
-    // }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     const {input}=await req.query;
     try {
         const suggestions=await getAutoCompleteSuggestions(input as string);

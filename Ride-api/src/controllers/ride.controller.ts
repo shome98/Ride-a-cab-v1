@@ -8,10 +8,10 @@ import { calculateFare } from "../services/ride.service";
 import { ApiResponse } from "../helpers/ApiResponse";
 
 export const bookRide = async (req: Request, res: Response) => {
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //     return res.status(400).json({ errors: errors.array() });
-    // }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     
     const { userId, pickup, destination, vehicleType } = await req.body;
     const newRide = await Ride.create({ user: userId, pickup, destination, vehicleType });
@@ -33,10 +33,10 @@ export const bookRide = async (req: Request, res: Response) => {
 };
 
 export const getfare=async(req:Request,res:Response)=>{
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //     return res.status(400).json({ errors: errors.array() });
-    // }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
 
     const {pickup,destination}= await req.query;
     const fare=await calculateFare(pickup as string,destination as string);

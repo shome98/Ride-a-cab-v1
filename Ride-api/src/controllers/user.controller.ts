@@ -3,14 +3,15 @@ import { User } from "../models/user.model";
 import { ApiError } from "../helpers/ApiError";
 import { ApiResponse } from "../helpers/ApiResponse";
 import { BlackListToken } from "../models/blackListToken.model";
+import { validationResult } from "express-validator";
 
 export const registerUser=async(req:Request,res:Response)=>{
     const {fullName,email,password}=await req.body;
     const {firstName,lastName}=fullName;
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //     return res.status(400).json({ errors: errors.array() });
-    // }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     if(!firstName||!email||!password) throw new ApiError(400, "All of the filelds are required.");
     const existingUser=await User.findOne({email});
     if (existingUser) throw new ApiError(409, "User with same email or username already exists.");
@@ -24,10 +25,10 @@ export const registerUser=async(req:Request,res:Response)=>{
 };
 
 export const userLogin=async(req:Request,res:Response)=>{
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //     return res.status(400).json({ errors: errors.array() });
-    // }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     const {email,password}=await req.body;
     const checkUser=await User.findOne({email}).select("+password");
     if(!checkUser) res.json(new ApiResponse(401,"Looks like you have entered an non existing email."));

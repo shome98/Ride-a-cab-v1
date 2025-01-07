@@ -3,6 +3,7 @@ import { Captain } from "../models/captain.model";
 import { ApiError } from "../helpers/ApiError";
 import { ApiResponse } from "../helpers/ApiResponse";
 import { BlackListToken } from "../models/blackListToken.model";
+import { validationResult } from "express-validator";
 
 export const registerCaptain=async(req:Request,res:Response)=>{
     const {fullName,email,password,vehicle}=await req.body;
@@ -15,10 +16,10 @@ export const registerCaptain=async(req:Request,res:Response)=>{
         throw new ApiError(400, "All vehicle details are required.");
     }*/
 
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //     return res.status(400).json({ errors: errors.array() });
-    // }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     if(!firstName||!email||!password||!color||!plate||!capacity||!vehicleType) throw new ApiError(400, "All of the filelds are required.");
     const existingCaptain=await Captain.findOne({email});
     //add a functionality if a user wants to be a captain
@@ -35,10 +36,10 @@ export const registerCaptain=async(req:Request,res:Response)=>{
 };
 
 export const captainLogin=async(req:Request,res:Response)=>{
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //     return res.status(400).json({ errors: errors.array() });
-    // }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     const {email,password}=await req.body;
     const checkCaptain=await Captain.findOne({email}).select("+password");
     if(!checkCaptain) res.json(new ApiResponse(401,"Looks like you have entered an non existing email."));
