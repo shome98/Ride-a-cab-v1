@@ -4,6 +4,8 @@ import { Ride } from "../models/ride.model";
 import { getAddressCoordinates, getCaptainsInTheRadius } from "../services/map.service";
 import { sendMessageToSocketId } from "../socket";
 import { ApiError } from "../helpers/ApiError";
+import { calculateFare } from "../services/ride.service";
+import { ApiResponse } from "../helpers/ApiResponse";
 
 export const bookRide = async (req: Request, res: Response) => {
     // const errors = validationResult(req);
@@ -28,4 +30,16 @@ export const bookRide = async (req: Request, res: Response) => {
         })
     });
     
+};
+
+export const getfare=async(req:Request,res:Response)=>{
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //     return res.status(400).json({ errors: errors.array() });
+    // }
+
+    const {pickup,destination}= await req.query;
+    const fare=await calculateFare(pickup as string,destination as string);
+    if(!fare) throw new ApiError(500,"Could not calculate the fare");
+    return res.status(200).json(new ApiResponse(200,fare,"Successfully calculated the fare."));
 };
