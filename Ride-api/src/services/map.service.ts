@@ -24,7 +24,7 @@ export const getDistanceTime = async (origin:string, destination:string) => {
     if (!origin || !destination) {
         throw new Error('Origin and destination are required');
     }
-    const apiKey = process.env.GOOGLE_MAPS_API;
+    const apiKey = process.env.GOOGLE_MAPS_API_KEY;
     const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(origin)}&destinations=${encodeURIComponent(destination)}&key=${apiKey}`;
     try {
         const response = await axios.get(url);
@@ -46,7 +46,7 @@ export const getAutoCompleteSuggestions = async (input:string) => {
     if (!input) {
         throw new Error('query is required');
     }
-    const apiKey = process.env.GOOGLE_MAPS_API;
+    const apiKey = process.env.GOOGLE_MAPS_API_KEY;
     const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(input)}&key=${apiKey}`;
     try {
         const response = await axios.get(url);
