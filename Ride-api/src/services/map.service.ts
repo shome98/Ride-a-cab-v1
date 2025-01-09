@@ -75,12 +75,16 @@ export const getAutoCompleteSuggestions = async (input:string) => {
 };
 
 export const getCaptainsInTheRadius=async(latitude:number,longitude:number,radius:number)=>{
-    const captains=await Captain.find({
-        location:{
-            $geoWithin:{
-                $centreSphere:[[latitude,longitude],radius/6371],
+    try {
+        const captains=await Captain.find({
+            location:{
+                $geoWithin:{
+                    $centreSphere:[[latitude,longitude],radius/6371],
+                }
             }
-        }
-    });
-    return captains;
+        });
+        return captains;
+    } catch (error) {
+        throw new Error(`Error occured: ${error}`);
+    }
 }
