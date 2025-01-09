@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 
-interface ICaptain extends Document{
+export interface ICaptain extends Document{
     fullName:{
         firstName:string;
         lastName?:string;
