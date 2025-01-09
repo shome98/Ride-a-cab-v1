@@ -1,4 +1,5 @@
 import { getDistanceTime } from "./map.service";
+import crypto from "crypto";
 
 export async function calculateFare(pickup:string,destination:string){
     if(!pickup || !destination) throw new Error("Pick and destination both are required ");
@@ -15,4 +16,9 @@ export async function calculateFare(pickup:string,destination:string){
         return fare;
     }
     return {};
+}
+
+export function generateOtp(num:number) {
+    const otp: string = crypto.randomInt(Math.pow(10, num - 1), Math.pow(10, num)).toString();
+    return otp;
 }
