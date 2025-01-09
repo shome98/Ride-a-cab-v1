@@ -1,6 +1,17 @@
 import axios from "axios";
 import { Captain } from "../models/captain.model";
 
+export interface Prediction {
+  description: string;
+  place_id: string;
+  structured_formatting: {
+    main_text: string;
+    secondary_text: string;
+  };
+  terms: { offset: number; value: string }[];
+  types: string[];
+}
+
 export const getAddressCoordinates=async(address:string)=>{
     const apiKey=process.env.GOOGLE_MAPS_API_KEY
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
@@ -51,7 +62,9 @@ export const getAutoCompleteSuggestions = async (input:string) => {
     try {
         const response = await axios.get(url);
         if (response.data.status === 'OK') {
-            return response.data.predictions.map(prediction => prediction.description).filter(value => value);
+            return response.data.predictions
+                .map((prediction: Prediction) => prediction.description)
+                .filter((value: string) => value);
         } else {
             throw new Error('Unable to fetch suggestions');
         }
