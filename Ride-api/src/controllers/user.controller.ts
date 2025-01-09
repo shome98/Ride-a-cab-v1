@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { User } from "../models/user.model";
-import { ApiError } from "../helpers/ApiError";
-import { ApiResponse } from "../helpers/ApiResponse";
-import { BlackListToken } from "../models/blackListToken.model";
+import { User } from "../models/user.model.ts";
+import { ApiError } from "../helpers/ApiError.ts";
+import { ApiResponse } from "../helpers/ApiResponse.ts";
+import { BlackListToken } from "../models/blackListToken.model.ts";
 import { validationResult } from "express-validator";
 
 export const registerUser=async(req:Request,res:Response)=>{

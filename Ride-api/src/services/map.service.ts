@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Captain } from "../models/captain.model";
+import { Captain } from "../models/captain.model.ts";
 
 export interface Prediction {
   description: string;

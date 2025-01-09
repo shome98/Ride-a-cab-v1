@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { auth } from "../middlewares/auth.middleware";
-import { autoCompleteSuggestions, fetchDistanceTime, getCoordinates } from "../controllers/map.controller";
-import { asyncHandler } from "../helpers/asyncHandler";
+import { auth } from "../middlewares/auth.middleware.ts";
+import { autoCompleteSuggestions, fetchDistanceTime, getCoordinates } from "../controllers/map.controller.ts";
+import { asyncHandler } from "../helpers/asyncHandler.ts";
 import { query } from "express-validator";
 
 const router = Router();

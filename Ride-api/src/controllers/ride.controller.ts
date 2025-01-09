@@ -1,11 +1,11 @@
 import { Request,Response } from "express";
 import { validationResult } from "express-validator";
-import { Ride } from "../models/ride.model";
-import { getAddressCoordinates, getCaptainsInTheRadius } from "../services/map.service";
-import { sendMessageToSocketId } from "../socket";
-import { ApiError } from "../helpers/ApiError";
-import { calculateFare, confrimRide, endRide, startRide } from "../services/ride.service";
-import { ApiResponse } from "../helpers/ApiResponse";
+import { Ride } from "../models/ride.model.ts";
+import { getAddressCoordinates, getCaptainsInTheRadius } from "../services/map.service.ts";
+import { sendMessageToSocketId } from "../socket.ts";
+import { ApiError } from "../helpers/ApiError.ts";
+import { calculateFare, confrimRide, endRide, startRide } from "../services/ride.service.ts";
+import { ApiResponse } from "../helpers/ApiResponse.ts";
 
 export const bookRide = async (req: Request, res: Response) => {
     const errors = validationResult(req);

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { getAddressCoordinates, getAutoCompleteSuggestions, getDistanceTime } from "../services/map.service";
-import { ApiResponse } from "../helpers/ApiResponse";
-import { ApiError } from "../helpers/ApiError";
+import { getAddressCoordinates, getAutoCompleteSuggestions, getDistanceTime } from "../services/map.service.ts";
+import { ApiResponse } from "../helpers/ApiResponse.ts";
+import { ApiError } from "../helpers/ApiError.ts";
 import { validationResult } from "express-validator";
 
 export const getCoordinates=async(req:Request,res:Response)=>{

@@ -1,12 +1,12 @@
 import express, { Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import dbConnect from "./db/dbConnection";
+import dbConnect from "./db/dbConnection.ts";
 import dotenv from "dotenv";
-import userRoutes from "./routes/user.routes";
-import captainRoutes from "./routes/captain.routes";
-import mapRoutes from "./routes/map.routes";
-import rideRoutes from "./routes/ride.routes";
+import userRoutes from "./routes/user.routes.ts";
+import captainRoutes from "./routes/captain.routes.ts";
+import mapRoutes from "./routes/map.routes.ts";
+import rideRoutes from "./routes/ride.routes.ts";
 
 const app = express();
 dotenv.config();

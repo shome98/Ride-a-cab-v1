@@ -1,7 +1,7 @@
 import express from "express";
-import { registerUser, userLogin, userLogout } from "../controllers/user.controller";
-import { asyncHandler } from "../helpers/asyncHandler";
-import { auth } from "../middlewares/auth.middleware";
+import { registerUser, userLogin, userLogout } from "../controllers/user.controller.ts";
+import { asyncHandler } from "../helpers/asyncHandler.ts";
+import { auth } from "../middlewares/auth.middleware.ts";
 import { body } from "express-validator";
 const router = express.Router();
 

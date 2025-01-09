@@ -1,9 +1,9 @@
 import express from "express";
-
-import { asyncHandler } from "../helpers/asyncHandler";
-import { auth } from "../middlewares/auth.middleware";
-import { captainLogin, captainLogout, registerCaptain } from "../controllers/captain.controller";
+import { asyncHandler } from "../helpers/asyncHandler.ts";
+import { auth } from "../middlewares/auth.middleware.ts";
+import { captainLogin, captainLogout, registerCaptain } from "../controllers/captain.controller.ts";
 import { body } from "express-validator";
+
 const router = express.Router();
 
 router.post("/register-captain", [

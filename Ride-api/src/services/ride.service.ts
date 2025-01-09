@@ -1,7 +1,7 @@
-import { ICaptain } from "../models/captain.model";
-import { getDistanceTime } from "./map.service";
+import { ICaptain } from "../models/captain.model.ts";
+import { getDistanceTime } from "./map.service.ts";
 import crypto from "crypto";
-import { Ride } from "../models/ride.model";
+import { Ride } from "../models/ride.model.ts";
 
 export async function calculateFare(pickup:string,destination:string){
     if(!pickup || !destination) throw new Error("Pick and destination both are required ");

@@ -1,6 +1,6 @@
 import { Server } from "socket.io";
-import { User } from "./models/user.model";
-import { Captain } from "./models/captain.model";
+import { User } from "./models/user.model.ts";
+import { Captain } from "./models/captain.model.ts";
 
 let io: Server | undefined;
 type userdata = { userId: string; userType: string };

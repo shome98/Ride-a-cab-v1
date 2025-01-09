@@ -1,7 +1,7 @@
 import express from "express";
-import { auth } from "../middlewares/auth.middleware";
-import { asyncHandler } from "../helpers/asyncHandler";
-import { bookRide, getFare, rideConfirmed, rideEnd, rideStart } from "../controllers/ride.controller";
+import { auth } from "../middlewares/auth.middleware.ts";
+import { asyncHandler } from "../helpers/asyncHandler.ts";
+import { bookRide, getFare, rideConfirmed, rideEnd, rideStart } from "../controllers/ride.controller.ts";
 import { body, query } from "express-validator";
 
 const router = express.Router();

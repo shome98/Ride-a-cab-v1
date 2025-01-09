@@ -1,11 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { BlackListToken } from "../models/blackListToken.model";
-import { ApiResponse } from "../helpers/ApiResponse";
-import { decode } from "punycode";
-import { User } from "../models/user.model";
-import { Captain } from "../models/captain.model";
-import { ApiError } from "../helpers/ApiError";
+import { BlackListToken } from "../models/blackListToken.model.ts";
+import { ApiResponse } from "../helpers/ApiResponse.ts";
+import { User } from "../models/user.model.ts";
+import { Captain } from "../models/captain.model.ts";
+import { ApiError } from "../helpers/ApiError.ts";
 
 export const auth=async(req:Request,res:Response,next:NextFunction)=>{
     const accessToken=req.headers.authorization?.split(" ")[1]||req.cookies?.accessToken;
