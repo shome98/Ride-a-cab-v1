@@ -4,7 +4,7 @@ import { Ride } from "../models/ride.model";
 import { getAddressCoordinates, getCaptainsInTheRadius } from "../services/map.service";
 import { sendMessageToSocketId } from "../socket";
 import { ApiError } from "../helpers/ApiError";
-import { calculateFare } from "../services/ride.service";
+import { calculateFare, confrimRide } from "../services/ride.service";
 import { ApiResponse } from "../helpers/ApiResponse";
 
 export const bookRide = async (req: Request, res: Response) => {
@@ -43,3 +43,22 @@ export const getfare=async(req:Request,res:Response)=>{
     if(!fare) throw new ApiError(500,"Could not calculate the fare");
     return res.status(200).json(new ApiResponse(200,fare,"Successfully calculated the fare."));
 };
+
+export const rideConfirmed = async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+    try {
+        const { rideId } = await req.body;
+        const ride = await confrimRide({ rideId, captain: (req as any).captain });
+        if (!ride) throw new ApiError(404, "Ride not found");
+        sendMessageToSocketId(ride.user.socketId, {
+          event: "ride-confirmed",
+          data: ride,
+        });
+        return res.status(200).json(new ApiResponse(200,"Successfully confrimed the ride."))
+    } catch (error) {
+        console.error("Error confirming the ride: ", error);
+        throw new Error(`Error confirming the ride: ${error}`);
+    }
+};
+
