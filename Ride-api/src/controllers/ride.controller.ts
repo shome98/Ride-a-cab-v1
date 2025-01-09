@@ -4,7 +4,7 @@ import { Ride } from "../models/ride.model";
 import { getAddressCoordinates, getCaptainsInTheRadius } from "../services/map.service";
 import { sendMessageToSocketId } from "../socket";
 import { ApiError } from "../helpers/ApiError";
-import { calculateFare, confrimRide, startRide } from "../services/ride.service";
+import { calculateFare, confrimRide, endRide, startRide } from "../services/ride.service";
 import { ApiResponse } from "../helpers/ApiResponse";
 
 export const bookRide = async (req: Request, res: Response) => {
@@ -84,4 +84,25 @@ export const rideStart = async (req: Request, res: Response) => {
         console.error("Error starting the ride: ", error);
         throw new Error(`Error startming the ride: ${error}`);
     }
+};
+
+export const rideEnd = async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const { rideId } = await req.body;
+    try {
+        const ride = await endRide({ rideId, captain: (req as any).captain });
+        if (!ride) throw new ApiError(404, "Ride not found");
+        sendMessageToSocketId(ride.user.socketId, {
+            event: "ride-ended",
+            data: ride,
+        });
+        return res.status(200).json(new ApiResponse(200, "Successfully completed the ride."));
+    } catch (error) {
+        console.error("Error ending the ride: ", error);
+        throw new Error(`Error ending the ride: ${error}`);
+    }
+
 };
