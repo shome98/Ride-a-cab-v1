@@ -1,5 +1,9 @@
+import { error } from "console";
+import { ICaptain } from "../models/captain.model";
 import { getDistanceTime } from "./map.service";
 import crypto from "crypto";
+import { Ride } from "../models/ride.model";
+import { throwDeprecation } from "process";
 
 export async function calculateFare(pickup:string,destination:string){
     if(!pickup || !destination) throw new Error("Pick and destination both are required ");
@@ -21,4 +25,12 @@ export async function calculateFare(pickup:string,destination:string){
 export function generateOtp(num:number) {
     const otp: string = crypto.randomInt(Math.pow(10, num - 1), Math.pow(10, num)).toString();
     return otp;
+}
+
+export async function confrimRide({ rideId, captain }: { rideId: string; captain: ICaptain }) {
+    if (!rideId) throw new Error("Ride id is required!!!");
+    await Ride.findByIdAndUpdate({ _id: rideId }, { status: "accepted", captain: captain._id });
+    const ride = await Ride.findById({ _id: rideId }).populate("user").populate("captain").select("+otp");
+    if (!ride) throw new Error("Ride not found!!!");
+    return ride;
 }
