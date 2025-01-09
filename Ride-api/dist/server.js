@@ -24,7 +24,7 @@
 //     .then(() => app.listen(process.env.PORT, () => console.log(`Server is running at http://localhost:${process.env.PORT}`)))
 //     .catch(error => console.log(`MONGODB CONNECTION FAILED!!!. `, error));
 import http from "http";
-import app from "./app";
+import app from "./app.js";
 import { initializeSocket } from "./socket";
 const server = http.createServer(app);
 initializeSocket(server);
