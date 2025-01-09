@@ -1,9 +1,7 @@
-import { error } from "console";
 import { ICaptain } from "../models/captain.model";
 import { getDistanceTime } from "./map.service";
 import crypto from "crypto";
 import { Ride } from "../models/ride.model";
-import { throwDeprecation } from "process";
 
 export async function calculateFare(pickup:string,destination:string){
     if(!pickup || !destination) throw new Error("Pick and destination both are required ");
@@ -33,4 +31,72 @@ export async function confrimRide({ rideId, captain }: { rideId: string; captain
     const ride = await Ride.findById({ _id: rideId }).populate("user").populate("captain").select("+otp");
     if (!ride) throw new Error("Ride not found!!!");
     return ride;
+}
+
+export async function startRide({
+  rideId,
+  otp,
+  captain,
+}: {
+  rideId: string;
+  otp: string;
+  captain: ICaptain;
+}) {
+  if (!rideId || !otp) {
+    throw new Error("Ride ID and OTP are required!!!");
+  }
+  const ride = await Ride.findById(rideId)
+    .populate("user")
+    .populate("captain")
+    .select("+otp");
+  if (!ride) {
+    throw new Error("Ride not found!!!");
+  }
+
+  if (ride.status !== "accepted") {
+    throw new Error("Ride is not in 'accepted' status!!!");
+  }
+
+  if (ride.otp !== otp) {
+    throw new Error("Invalid OTP!!!");
+    }
+    
+  ride.status = "ongoing";
+  await ride.save();
+
+  return ride;
+}
+
+
+export async function endRide({
+  rideId,
+  captain,
+}: {
+  rideId: string;
+  captain: ICaptain;
+}) {
+  if (!rideId) {
+    throw new Error("Ride ID is required!!!");
+  }
+
+  const ride = await Ride.findOne({
+    _id: rideId,
+    captain: captain._id,
+  })
+    .populate("user")
+    .populate("captain")
+    .select("+otp");
+
+  if (!ride) {
+    throw new Error("Ride not found!!!");
+  }
+
+  if (ride.status !== "ongoing") {
+    throw new Error("Ride is not in 'ongoing' status!!!");
+  }
+
+  ride.status = "completed";
+  await ride.save();
+
+  return ride;
 }
