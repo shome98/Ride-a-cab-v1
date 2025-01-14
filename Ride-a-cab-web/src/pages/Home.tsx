@@ -9,7 +9,7 @@ export default function Home():JSX.Element{
         <div>backgrund image with vehicles goes here</div>
         <div className="bg-slate-400 flex justify-center flex-col items-center">
         <h2 className="text-[30px] font-seibold">Get started with Ridee</h2>
-        <button className="p-3 bg-black text-white rounded-lg m-5" onClick={()=>navigate("/sign-up")}>Continue</button>
+        <button className="p-3 bg-black text-white rounded-lg m-5" onClick={()=>navigate("/user-login")}>Continue</button>
         </div>
       </div>
   </div>
