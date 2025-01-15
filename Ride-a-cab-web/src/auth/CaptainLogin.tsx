@@ -34,7 +34,7 @@ export default function CaptainLogin(){
             />
             <button className="bg-yellow-400 text-black m-3 w-full px-4 py-2 rounded font-semibold">Login</button>
         </form>
-        <p className="text-center m-2">New here? <button className="text-blue-700" onClick={()=>navigate("/sign-up")}>Create new Account</button></p>
+        <p className="text-center m-2">New here? <button className="text-blue-700" onClick={()=>navigate("/captain-signup")}>Create new Account</button></p>
     </div>
     <div>
     <button className="bg-black text-white m-3 w-full px-4 py-2 rounded font-semibold" onClick={()=>navigate("/user-login")}>Login as User</button>
