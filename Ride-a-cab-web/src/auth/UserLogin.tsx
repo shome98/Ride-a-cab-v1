@@ -10,7 +10,7 @@ export default function UserLogin(){
     }
     return (
     <>
-    <div className="p-7 h-screen flex flex-col justify-between ">
+    <div className="p-7 h-screen w-screen flex flex-col justify-between ">
     <div>
         <h1>paste a background image here</h1>
         <form action="" method="post" onSubmit={submitHandler}>
