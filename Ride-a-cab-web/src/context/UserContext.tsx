@@ -1,9 +1,33 @@
-import React, { createContext } from "react";
+import React, { createContext, useState, ReactNode } from 'react';
 
-export const UserDataContext=createContext({});
-
-export default function UserContext({children}:{children:React.ReactNode}):JSX.Element{
-    return (
-        <UserDataContext.Provider value={{}}>{children}</UserDataContext.Provider>
-    )
+interface User {
+  _id: string;
+  email: string;
+  fullName: {
+    firstName: string;
+    lastName: string;
+  };
 }
+
+interface UserContextType {
+  user: User | null;
+  setUser: (user: User | null) => void;
+}
+
+export const UserDataContext = createContext<UserContextType | null>(null);
+
+interface UserProviderProps {
+  children: ReactNode;
+}
+
+const UserContext: React.FC<UserProviderProps> = ({ children }) => {
+  const [user, setUser] = useState<User | null>(null);
+
+  return (
+    <UserDataContext.Provider value={{ user, setUser }}>
+      {children}
+    </UserDataContext.Provider>
+  );
+};
+
+export default UserContext;
