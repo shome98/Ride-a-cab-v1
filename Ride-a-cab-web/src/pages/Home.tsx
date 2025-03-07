@@ -29,9 +29,9 @@ const Home: React.FC = () => {
   const [waitingForDriver, setWaitingForDriver] = useState(false);
   const [pickupSuggestions, setPickupSuggestions] = useState<string[]>([]);
   const [destinationSuggestions, setDestinationSuggestions] = useState<string[]>([]);
-  const [activeField, setActiveField] = useState<'pickup' | 'destination' | null>(null);
+  const [activeField, setActiveField] = useState<'pickup' | 'destination' | "">("");
   const [fare, setFare] = useState<{ [key: string]: number }>({});
-  const [vehicleType, setVehicleType] = useState<string | null>(null);
+  const [vehicleType, setVehicleType] = useState<string>("");
   const [ride, setRide] = useState<any>(null);
 
   const navigate = useNavigate();
@@ -294,7 +294,7 @@ const Home: React.FC = () => {
           ride={ride}
           setVehicleFound={setVehicleFound}
           setWaitingForDriver={setWaitingForDriver}
-          waitingForDriver={waitingForDriver}
+          waitingForDriver={setWaitingForDriver}
         />
       </div>
     </div>
