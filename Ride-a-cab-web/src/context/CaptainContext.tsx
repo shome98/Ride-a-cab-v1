@@ -25,7 +25,15 @@ interface CaptainContextType {
   updateCaptain: (captainData: Captain) => void;
 }
 
-export const CaptainDataContext = createContext<CaptainContextType | null>(null);
+export const CaptainDataContext = createContext<CaptainContextType | null>({
+  captain: null,
+  setCaptain: () => {},  // Default empty function to avoid errors
+  isLoading: false,
+  setIsLoading: () => {},  // Default empty function
+  error: null,
+  setError: () => {},  // Default empty function
+  updateCaptain: () => {},  // Default empty function
+});
 
 interface CaptainProviderProps {
   children: ReactNode;

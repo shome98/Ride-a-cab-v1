@@ -14,7 +14,10 @@ interface UserContextType {
   setUser: (user: User | null) => void;
 }
 
-export const UserDataContext = createContext<UserContextType | null>(null);
+export const UserDataContext = createContext<UserContextType>({
+  user: null,
+  setUser: () => { },
+});
 
 interface UserProviderProps {
   children: ReactNode;
