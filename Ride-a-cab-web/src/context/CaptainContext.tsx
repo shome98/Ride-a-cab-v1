@@ -27,12 +27,12 @@ interface CaptainContextType {
 
 export const CaptainDataContext = createContext<CaptainContextType | null>({
   captain: null,
-  setCaptain: () => {},  // Default empty function to avoid errors
+  setCaptain: () => {}, 
   isLoading: false,
-  setIsLoading: () => {},  // Default empty function
+  setIsLoading: () => {},
   error: null,
-  setError: () => {},  // Default empty function
-  updateCaptain: () => {},  // Default empty function
+  setError: () => {}, 
+  updateCaptain: () => {}, 
 });
 
 interface CaptainProviderProps {
