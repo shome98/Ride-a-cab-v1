@@ -11,8 +11,6 @@ interface LocationSearchPanelProps {
 
 const LocationSearchPanel: React.FC<LocationSearchPanelProps> = ({
   suggestions,
-  setVehiclePanel,
-  setPanelOpen,
   setPickup,
   setDestination,
   activeField,
