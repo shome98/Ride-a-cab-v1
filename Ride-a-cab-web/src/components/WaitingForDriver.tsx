@@ -9,8 +9,6 @@ interface WaitingForDriverProps {
 
 const WaitingForDriver: React.FC<WaitingForDriverProps> = ({
   ride,
-  setVehicleFound,
-  setWaitingForDriver,
   waitingForDriver,
 }) => {
   return (
