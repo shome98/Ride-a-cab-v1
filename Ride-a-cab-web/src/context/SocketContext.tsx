@@ -1,26 +1,31 @@
-import React, { createContext, useEffect, ReactNode } from 'react';
-import { io, Socket } from 'socket.io-client';
+import React, { createContext, useEffect, ReactNode, useMemo } from "react";
+import { io, Socket } from "socket.io-client";
 
-export const SocketContext = createContext<Socket | null>(null);
+// Define a default socket connection to prevent null values
+const defaultSocket = io(`${import.meta.env.VITE_BASE_URL}`);
+
+export const SocketContext = createContext<Socket>(defaultSocket);
 
 interface SocketProviderProps {
   children: ReactNode;
 }
 
 const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
-  const socket = io(`${import.meta.env.VITE_BASE_URL}`); // Replace with your server URL
+  const socket = useMemo(() => io(`${import.meta.env.VITE_BASE_URL}`), []);
 
   useEffect(() => {
-    // Basic connection logic
-    socket.on('connect', () => {
-      console.log('Connected to server');
+    socket.on("connect", () => {
+      console.log("Connected to server");
     });
 
-    socket.on('disconnect', () => {
-      console.log('Disconnected from server');
+    socket.on("disconnect", () => {
+      console.log("Disconnected from server");
     });
 
-  }, []);
+    return () => {
+      socket.disconnect();
+    };
+  }, [socket]);
 
   return (
     <SocketContext.Provider value={socket}>
