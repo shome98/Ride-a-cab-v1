@@ -25,7 +25,7 @@ interface CaptainContextType {
   updateCaptain: (captainData: Captain) => void;
 }
 
-export const CaptainDataContext = createContext<CaptainContextType | null>({
+export const CaptainDataContext = createContext<CaptainContextType>({
   captain: null,
   setCaptain: () => {}, 
   isLoading: false,
